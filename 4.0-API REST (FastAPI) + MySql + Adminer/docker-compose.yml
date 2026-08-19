@@ -1,0 +1,44 @@
+services:
+  # 1. Base de Datos MySql
+  db:
+    image: mysql:8.0 # Usamos la imagen oficial de MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # Contraseña del usuario root
+      MYSQL_DATABASE: ${DB_DATABASE} # Nombre de la base de datos
+      MYSQL_USER: ${DB_USER} # Nombre de usuario
+      MYSQL_PASSWORD: ${DB_PASSWORD} # Contraseña del usuario
+    ports:
+      - "3306:3306" # Puerto por defecto de MySQL
+    volumes:
+      - dbBiblioteca:/var/lib/mysql # Guarda los datos de la base de datos en un volumen llamado 'dbBiblioteca'
+  
+  # 2. Gestor Visual de la Base de Datos (Panel Web)
+  adminer:
+    image: adminer # Usamos la imagen oficial de Adminer
+    ports:
+      - "8080:8080" # Puerto para acceder a la interfaz web de Adminer
+    depends_on:
+      - db # Le dice a Docker que espere a que el contenedor 'db' se inicie antes de iniciar 'adminer'
+
+  # 3. Nuestra API FastAPI
+  api:
+    build: .
+    restart: always # Añadimos esto porque al iniciar el contenedor desde cero la API se inicia rapido pero MySql tarda un poquito más en arrancar. Entonces
+    # para evitar errores de que la API intente conectarse con la base de datos antes de tiempo, le decimos que se reinicie siempre que pueda. 
+    # Esto hace que si la base de datos aún no está lista, el contenedor de la API se apague y vuelva a intentarlo automaticamente hasta que consiga conectarse
+    ports:
+      - "8000:8000" # Puerto para acceder a la API
+    environment:
+      - DB_HOST=db # Nombre del servicio que tiene MySQL
+      - DB_USER=${DB_USER} # Nombre de usuario
+      - DB_PASSWORD=${DB_PASSWORD} # Contraseña del usuario
+      - DB_NAME=${DB_DATABASE} # Nombre de la base de datos
+      - DB_PORT=${DB_PORT} # Puerto de MySQL
+    depends_on:
+      - db # Le dice a Docker que espere a que el contenedor 'db' se inicie antes de iniciar 'api'
+    volumes:
+      - .:/app # hace que los cambios en el código se reflejen en el contenedor
+
+volumes:
+  dbBiblioteca:
+    

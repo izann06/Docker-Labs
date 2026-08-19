@@ -1,0 +1,13 @@
+# Variables de entorno y secretos
+.env
+
+# Dependencias y entornos
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Datos o volúmenes montados localmente si los hubiera
+*.db
+*.sqlite

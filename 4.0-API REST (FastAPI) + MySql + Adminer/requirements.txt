@@ -1,0 +1,3 @@
+fastapi # Framework web para crear APIs REST
+uvicorn # Servidor para correr FastAPI
+pymysql # Driver para conectar a MySQL

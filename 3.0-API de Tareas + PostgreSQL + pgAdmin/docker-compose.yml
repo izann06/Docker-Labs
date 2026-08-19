@@ -1,0 +1,46 @@
+services:
+  #1. Gestor de Base de Datos PostgreSQL
+  db:
+    image: postgres:16-alpine # Seleccionamos la imagen de PostgreSQL
+    environment:
+      POSTGRES_USER: usuario # nombre de usuario
+      POSTGRES_PASSWORD: 1234 # contraseña
+      POSTGRES_DB: base_tareas # base de datos
+    ports:
+      - "5432:5432" # Puerto por defecto de PostgreSQL
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Le dice a Docker que guarde los datos de la base de datos en un volumen llamado 'pgdata'
+  
+  #2. Gestor Visual de la Base de Datos (Panel Web)
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@user.com
+      PGADMIN_DEFAULT_PASSWORD: root
+
+    ports:
+      - "5050:80" # Puerto para acceder a la interfaz web de pgAdmin
+    depends_on:
+      - db # Le dice a Docker que espere a que el contenedor 'db' se inicie antes de iniciar 'pgadmin'
+    
+  #3. Nuestra API Node.js
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db # nombre del servicio que tiene PostgreSQL
+      - DB_USER=usuario # nombre de usuario
+      - DB_PASSWORD=1234 # contraseña
+      - DB_NAME=base_tareas # base de datos
+      - DB_PORT=5432 # puerto de PostgreSQL
+    depends_on:
+      - db # Le dice a Docker que espere a que el contenedor 'db' se inicie antes de iniciar 'api'
+
+# Definimos los volúmenes para PostgreSQL
+volumes:
+  pgdata: # Definimos el volumen para PostgreSQL
+      
+      
+      
+      

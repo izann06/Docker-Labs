@@ -1,0 +1,10 @@
+services: #Aquí se definen todos los contenedores que quieres usar
+  mi-api-node: #Nombre inventado para este contenedor
+    build: . #Le dice a docker que busque un Dockerfile en esta misma carpeta y construya la imagen
+    ports: #Enlaza los puertos
+      - "3001:3000" #Desde el 3001 de mi PC hasta el 3000 del contenedor
+    volumes:
+      - .:/app #Sincroniza mi carpeta actual con la del contenedor
+    restart: always #Siempre que reinicie mi PC o Docker, se iniciará automáticamente
+    
+    
