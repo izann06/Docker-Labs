@@ -22,7 +22,7 @@ services:
 
   # 3. Nuestra API FastAPI
   api:
-    build: .
+    build: . # Esto es un Bind Mounts, hace que los cambios en el código se reflejen en el contenedor
     restart: always # Añadimos esto porque al iniciar el contenedor desde cero la API se inicia rapido pero MySql tarda un poquito más en arrancar. Entonces
     # para evitar errores de que la API intente conectarse con la base de datos antes de tiempo, le decimos que se reinicie siempre que pueda. 
     # Esto hace que si la base de datos aún no está lista, el contenedor de la API se apague y vuelva a intentarlo automaticamente hasta que consiga conectarse
@@ -37,7 +37,8 @@ services:
     depends_on:
       - db # Le dice a Docker que espere a que el contenedor 'db' se inicie antes de iniciar 'api'
     volumes:
-      - .:/app # hace que los cambios en el código se reflejen en el contenedor
+      - .:/app # hace que los cambios en el código se reflejen en el contenedor, asi que al cambiar el código y guardar
+      # se refleja automaticamente en la API que se esta ejecutando en el contenedor, sin necesidad de reconstruir la imagen.
 
 volumes:
   dbBiblioteca:
