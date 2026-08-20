@@ -11,3 +11,16 @@ venv/
 # Datos o volúmenes montados localmente si los hubiera
 *.db
 *.sqlite
+
+# Logs y archivos generados en ejecución (Homepage, etc.)
+*.log
+logs/
+**/logs/
+
+# Plantillas y archivos por defecto de Homepage (no utilizados)
+**/homepage_data/custom.css
+**/homepage_data/custom.js
+**/homepage_data/docker.yaml
+**/homepage_data/kubernetes.yaml
+**/homepage_data/proxmox.yaml
+

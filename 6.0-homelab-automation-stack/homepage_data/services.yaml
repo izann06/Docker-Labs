@@ -1,0 +1,14 @@
+- Mi Infraestructura:
+      - Portainer:
+            icon: portainer.png
+            href: http://localhost:9000
+            description: Gestión visual de contenedores
+
+      - n8n:
+            icon: n8n.png
+            href: http://localhost:5678
+            description: Motor de automatización de flujos
+      - GitHub:
+            icon: github.png
+            href: https://github.com/izann06?tab=repositories
+            description: Repositorios de Izan

@@ -1,0 +1,102 @@
+services:
+  # BASE DE DATOS: PostgreSQL (Inaccesible desde fuera de la red)
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped # Para que el contenedor se reinicie automáticamente si se detiene o si el ordenador se reinicia.
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: ${TZ}
+    volumes:
+      - db_data:/var/lib/postgresql/data # Para que los datos persistan aunque se detenga el contenedor.
+    networks:
+      - red_backend # Para que el contenedor se comunique con la red de backend y asi no está expuesto a internet,
+                    # Solo la interfaz de n8n estará expuesta, porque n8n se encarga de comunicarse con la base de datos.
+    
+    # HEALTHCHECK (Comprobación de salud):
+    # Es una configuración que le dice a Docker: "Oye, antes de decir que este contenedor está listo, 
+    # asegúrate de que PostgreSQL esté realmente funcionando, no solo que el contenedor se haya iniciado".
+    healthcheck:
+      # TEST: El comando real que se ejecuta dentro del contenedor de Postgres.
+      # 'pg_isready' es una herramienta nativa de Postgres que intenta hacer login con el usuario y la BD. 
+      # Si la BD no está levantada del todo, el comando falla.
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      
+      # INTERVAL: Docker, haz esta prueba cada 10 segundos exactos.
+      interval: 10s
+      
+      # TIMEOUT: Si lanzas el test y la BD tarda más de 5 segundos en responder, considéralo un fallo.
+      timeout: 5s
+      
+      # RETRIES: Si la BD falla el test 5 veces seguidas, declárala oficialmente "Unhealthy".
+      retries: 5
+
+  # Motor de Automatización (n8n): Para crear flujos de trabajo automatizados
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped # Para que el contenedor se reinicie automáticamente si se detiene o si el ordenador se reinicia.
+    ports:
+      - "5678:5678" # Para acceder a la interfaz de n8n desde internet.
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${DB_NAME}
+      - DB_POSTGRESDB_USER=${DB_USER}
+      - DB_POSTGRESDB_PASSWORD=${DB_PASSWORD}
+      - GENERIC_TIMEZONE=${TZ}
+    networks:
+      - red_frontend # Para que la inferfaz de n8n esté expuesta a internet.
+      - red_backend # Para que n8n se comunique con la base de datos.
+    volumes:
+      - n8n_data:/home/node/.n8n # Para que los datos de n8n persistan aunque se detenga el contenedor.
+    depends_on:
+      postgres:
+        condition: service_healthy # Para que n8n se inicie solo cuando la base de datos esté lista.
+
+  # 3. Gestor visual de Docker (Portainer)
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped # Para que el contenedor se reinicie automáticamente si se detiene o si el ordenador se reinicia.
+    ports:
+      - "9000:9000" # Para acceder a la inferfaz de portainer desde internet.
+    volumes:
+      - portainer_data:/data # Para que los datos de portainer persistan aunque se detenga el contenedor.
+      - /var/run/docker.sock:/var/run/docker.sock # Para que portainer pueda gestionar los contenedores.
+    networks:
+      - red_frontend # Para que la inferfaz de portainer esté expuesta a internet.
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    restart: unless-stopped # Para que el contenedor se reinicie automáticamente si se detiene o si el ordenador se reinicia.
+    ports:
+      - "3000:3000" # Para acceder a la inferfaz de homepage desde internet.
+    volumes:
+      - ./homepage_data:/app/config # Ahora este volumen apunta a la carpeta ./homepage_data de mi ordenador. Si no existe, se creará.
+    networks:
+      - red_frontend # Para que la inferfaz de homepage esté expuesta a internet.
+    
+
+# VOLUMES: Son necesarios para que los datos persistan aunque se detenga el contenedor.
+volumes:
+  db_data: # Para que los datos de la base de datos persistan aunque se detenga el contenedor.
+  n8n_data: # Para que los datos de n8n persistan aunque se detenga el contenedor.
+  portainer_data: # Para que los datos de portainer persistan aunque se detenga el contenedor.
+  homepage_data: # Para que los datos de homepage persistan aunque se detenga el contenedor.
+
+# REDES: Son necesarias para que los contenedores se comuniquen entre sí.
+networks:
+  red_frontend:
+    driver: bridge
+  red_backend:
+    driver: bridge
+         
+
+  
+    
+    
+  
+
+    
+    

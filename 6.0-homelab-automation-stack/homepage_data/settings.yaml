@@ -1,0 +1,9 @@
+background:
+  # Imagen de código/servidores.
+  # Puedes cambiar esta URL por cualquier imagen de AWS/Terraform/Docker que subas a Imgur o encuentres en Google.
+  image: "https://imgs.search.brave.com/vwjMfIiZjBeYwX3H7XAd6jzpLVrXuMD_cS3aznRYdWE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93MC5w/ZWFrcHguY29tL3dh/bGxwYXBlci84MDMv/OTIwL0hELXdhbGxw/YXBlci1yb2NreS1i/YWxib2EtYmFsYm9h/LWFjdG9yLXN5bHZl/c3Rlci1zdGFsbG9u/ZS10aHVtYm5haWwu/anBn"
+  blur: sm # Desenfoque ligero para darle un toque moderno
+  brightness: 50 # Lo oscurece al 50% para que las letras blancas se lean perfectas
+  saturate: 75 # Apaga un poco los colores de fondo
+
+theme: dark # Fuerza el modo oscuro en el panel

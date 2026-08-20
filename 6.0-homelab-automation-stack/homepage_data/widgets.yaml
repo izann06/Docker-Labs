@@ -1,0 +1,7 @@
+- openmeteo:
+      label: Villafranqueza
+      latitude: 38.3789
+      longitude: -0.5019
+      timezone: Europe/Madrid
+      units: metric
+      format: "%t - %d"
