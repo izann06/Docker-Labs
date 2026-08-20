@@ -1,0 +1,52 @@
+services:
+  # 1. Base de Datos MySql
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_finanzas:/var/lib/mysql
+  
+  # 2. Redis (para cache y sesiones en memoria)
+  redis:
+    image: redis:alpine
+    restart: always # Añadimos esto porque al iniciar el contenedor desde cero la API se inicia rapido pero MySql tarda un poquito más en arrancar. Entonces
+    # para evitar errores de que la API intente conectarse con la base de datos antes de tiempo, le decimos que se reinicie siempre que pueda. 
+    # Esto hace que si la base de datos aún no está lista, el contenedor de la API se apague y vuelva a intentarlo automaticamente hasta que consiga conectarse
+    ports:
+      - "6379:6379"
+
+  # 3. Panel de Administración (Adminer)
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  # 4. API FastAPI
+  api:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_DATABASE}
+      - REDIS_HOST=redis
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app # Bind Mounts: hace que los cambios en el código se reflejen en el contenedor
+
+volumes:
+  mysql_finanzas: # Guarda los datos de la base de datos en este volumen

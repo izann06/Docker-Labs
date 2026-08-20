@@ -1,0 +1,9 @@
+fastapi # Framework web para construir la API REST.
+uvicorn # Servidor ASGI para ejecutar la API FastAPI.
+pymysql # Driver de Python para conectar con MySQL.
+redis # Cliente de Python para interactuar con Redis.
+PyJWT # Librería para crear y validar Tokens Web JSON.
+bcrypt # Librería para hashing de contraseñas con bcrypt.
+passlib[bcrypt] # Librería para hashear y verificar contraseñas.
+python-multipart # Necesario para procesar los formularios de login (OAuth2PasswordRequestForm).
+
