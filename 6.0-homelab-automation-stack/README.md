@@ -27,26 +27,27 @@ El stack orquesta **4 contenedores** interconectados mediante Docker Compose:
 
 ```mermaid
 flowchart TD
-    subgraph Host[" 💻 Host (Tu PC / Navegador) "]
+    subgraph Host[" 💻 Host - Tu PC / Navegador "]
         Nav["🌐 Navegador Web"]
     end
 
-    subgraph FrontendNet[" 🌐 red_frontend (Bridge) "]
-        Portainer["🚢 Portainer CE\n:9000"]
-        Homepage["🏠 Homepage Dashboard\n:3000"]
-        n8n["🤖 n8n Automation Engine\n:5678"]
+    subgraph FrontendNet[" 🌐 red_frontend - Bridge "]
+        Portainer["🚢 Portainer CE - :9000"]
+        Homepage["🏠 Homepage Dashboard - :3000"]
+        n8n["🤖 n8n Automation Engine - :5678"]
     end
 
-    subgraph BackendNet[" 🔒 red_backend (Aislada / Privada) "]
+    subgraph BackendNet[" 🔒 red_backend - Aislada / Privada "]
         n8n
-        Postgres[("🐘 PostgreSQL 16\n(Sin puertos hacia el Host)\npg_isready healthcheck")]
+        Postgres[("🐘 PostgreSQL 16 - Sin puertos al Host")]
     end
 
     Nav -->|http://localhost:9000| Portainer
     Nav -->|http://localhost:3000| Homepage
     Nav -->|http://localhost:5678| n8n
-    n8n -->|postgres:5432\n(DNS interno de Docker)| Postgres
+    n8n -->|"postgres:5432 - DNS interno Docker"| Postgres
 ```
+
 
 ### Principios Clave Implementados:
 
