@@ -64,10 +64,9 @@ De forma complementaria, estoy siguiendo la ruta de proyectos oficiales para val
 Proyectos: https://roadmap.sh/docker/projects
 
 ### 🟢 Nivel Básico
-- [x] **[1.1 - Basic Dockerfile](./1.1-Basic%20Dockerfile)**
+- [x] **Basic Dockerfile**
   > 🔗 **Reto:** https://roadmap.sh/projects/basic-dockerfile
-  > 🏆 **Solución:** [Ver en GitHub](https://github.com/izann06/Docker-Labs/tree/main/1.1-Basic%20Dockerfile)
-- [ ] *(Próximamente más proyectos básicos...)*
+  > 🏆 **Solución:** [Ver en GitHub](https://github.com/izann06/Docker-Labs/tree/main/Roadmap/Basico/1.1-Basic%20Dockerfile)
 
 ### 🟡 Nivel Intermedio
 - [ ] 🚧 *Aún no he llegado a este nivel.*
