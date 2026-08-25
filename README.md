@@ -66,6 +66,7 @@ Proyectos: https://roadmap.sh/docker/projects
 ### 🟢 Nivel Básico
 - [x] **[1.1 - Basic Dockerfile](./1.1-Basic%20Dockerfile)**
   > 🔗 **Reto:** https://roadmap.sh/projects/basic-dockerfile
+  > 🏆 **Solución:** [Ver en GitHub](https://github.com/izann06/Docker-Labs/tree/main/1.1-Basic%20Dockerfile)
 - [ ] *(Próximamente más proyectos básicos...)*
 
 ### 🟡 Nivel Intermedio
