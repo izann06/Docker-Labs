@@ -2,8 +2,6 @@
 
 Este repositorio es mi laboratorio personal para aprender y practicar Docker y Docker Compose de forma incremental.
 
-> Proyecto actual para Roadmap.sh: https://roadmap.sh/projects/basic-dockerfile
-
 Abarca desde empaquetar una aplicación básica con un `Dockerfile` hasta la orquestación de arquitecturas multicontenedor con APIs (Node.js y FastAPI), bases de datos relacionales (PostgreSQL y MySQL), automatización, redes Zero-Trust y paneles de administración.
 
 ---
@@ -56,6 +54,25 @@ Abarca desde empaquetar una aplicación básica con un `Dockerfile` hasta la orq
 | **6.0** | n8n | `5678` | `5678` | `http://localhost:5678` |
 | **6.0** | Homepage Dashboard | `3000` | `3000` | `http://localhost:3000` |
 | **6.0** | PostgreSQL 16 | *Ninguno* | `5432` | `postgres:5432` *(Red privada)* |
+
+---
+
+## 🗺️ Roadmap de Docker (Roadmap.sh)
+
+De forma complementaria, estoy siguiendo la ruta de proyectos oficiales para validar mis conocimientos y escalar la dificultad poco a poco.
+
+Proyectos: https://roadmap.sh/docker/projects
+
+### 🟢 Nivel Básico
+- [x] **[1.1 - Basic Dockerfile](./1.1-Basic%20Dockerfile)**
+  > 🔗 **Reto:** https://roadmap.sh/projects/basic-dockerfile
+- [ ] *(Próximamente más proyectos básicos...)*
+
+### 🟡 Nivel Intermedio
+- [ ] 🚧 *Aún no he llegado a este nivel.*
+
+### 🔴 Nivel Avanzado
+- [ ] 🚧 *Aún no he llegado a este nivel.*
 
 ---
 
