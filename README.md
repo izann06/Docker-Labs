@@ -2,6 +2,8 @@
 
 Este repositorio es mi laboratorio personal para aprender y practicar Docker y Docker Compose de forma incremental.
 
+> Proyecto actual para Roadmap.sh: https://roadmap.sh/projects/basic-dockerfile
+
 Abarca desde empaquetar una aplicación básica con un `Dockerfile` hasta la orquestación de arquitecturas multicontenedor con APIs (Node.js y FastAPI), bases de datos relacionales (PostgreSQL y MySQL), automatización, redes Zero-Trust y paneles de administración.
 
 ---
